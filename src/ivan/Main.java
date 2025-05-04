@@ -4,9 +4,6 @@ import java.util.Scanner;
 
 public class Main {
 
-
-    private static Scanner scanner = new Scanner(System.in);
-
     private static String userInput;
 
     private static Double resultOutput = 0.0;
@@ -24,38 +21,31 @@ public class Main {
         * Additionally, make sure if a Dividing by 0 would happen, you catch that and just return a 0 instead!
         *
         * */
+        startCalculator();
 
-        System.out.println("To exit type \"exit\" to clear screen and reset type \"clear\" , to end operation type \";\"");
+    }
+
+    public static void startCalculator(){
+        Intro();
         // running loop
         while (true){
 
             // First operator
             do {
-                System.out.print("Enter a number (double) : ");
-                userInput = scanner.next();
-                if (userInput.equals("exit") || userInput.equals("clear")){
+                userInput = enterInput(false);
+                if (userInput.equals("exit") || userInput.equals("clear") || userInput.equals(";")){
                     break;
                 }
-                switch (operator){
-                    case "+": resultOutput += Double.parseDouble(userInput);
-                        break;
-                    case "-": resultOutput -= Double.parseDouble(userInput);
-                        break;
-                    case "*": resultOutput *= Double.parseDouble(userInput);
-                        break;
-                    case "/": resultOutput /= Double.parseDouble(userInput);
-                        break;
-                    default: System.out.println("Error operator not valid" + operator);
-                        break;
+                doOperator();
+                if (operator.equals("exit") || operator.equals("clear")){
+                    break;
                 }
-                System.out.println("Enter operator ");
-                operator = scanner.next();
+                operator = enterInput(true);
                 if (operator.equals("exit") || operator.equals("clear")){
                     break;
                 }
 
             }while (!userInput.equals(";") && !operator.equals(";") );
-
             if (operator.equals("exit") || userInput.equals("exit")){
                 System.out.println("Exiting...");
                 break;
@@ -63,27 +53,71 @@ public class Main {
                 clearEverything();
             }else{
                 System.out.println("Result: " + resultOutput);
-                resultOutput = 0.0;
-                operator = "+";
+                clearData();
             }
-
         }
-
-
-
     }
 
-    public static void clearScreen() {
-        System.out.print("\033[H\033[2J");
-        System.out.flush();
+
+    public static Boolean doOperator(){
+        switch (operator){
+            case "+": resultOutput += Double.parseDouble(userInput);
+                return true;
+
+            case "-":
+                resultOutput -= Double.parseDouble(userInput);
+                return true;
+
+            case "*":
+                resultOutput *= Double.parseDouble(userInput);
+                return true;
+
+            case "/":
+                try {
+                    resultOutput /= Double.parseDouble(userInput);
+                    return true;
+                } catch (Exception e){
+                    System.out.println("Error division");
+                    operator = "clear";
+                    return false;
+                }
+            default: System.out.println("Error operator not valid" + operator);
+                return false;
+
+        }
+    }
+
+    public static String enterInput( Boolean isOperator) {
+        // VARIABLES
+        String inputResult;
+        Scanner scanner  = new Scanner(System.in);
+
+        System.out.printf("Enter %s : ", isOperator ? "number ": " operation");
+        inputResult = scanner.next();
+
+        return inputResult;
+    }
+
+    public static void Intro(){
+        System.out.println("To exit type \"exit\" to clear screen and reset type \"clear\" , to end operation type \";\"");
+    }
+
+    public static void clearTerminal()  {
+        for (int i =0; i <50; i++){
+            System.out.println();
+        }
+    }
+
+    public static void clearData() {
+        resultOutput = 0.0;
+        operator = "+";
     }
 
     public static void clearEverything() {
-        clearScreen();
+        clearTerminal();
+        clearData();
         System.out.println("Reseting...");
-        System.out.println("To exit type \"exit\" to clear screen and reset type \"clear\" , to end operation type \";\"");
-        resultOutput = 0.0;
-        operator = "+";
+        Intro();
     }
 
 }
