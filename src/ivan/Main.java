@@ -1,7 +1,5 @@
 package ivan;
 
-import javax.annotation.processing.SupportedSourceVersion;
-import java.util.Map;
 import java.util.Scanner;
 
 public class Main {
@@ -18,19 +16,12 @@ public class Main {
 
 
     public static void main(String[] args) {
-        /* Easy Calculator
-        * Create a Calulator that runs multiple times until you break out of it .
-        * You should read the operation first, then read the first and second number.
+        /* Calculator | Exercise 2
         *
-        * Depending on the operation chosen, you then have to return a different result.
-        * You can do this with if statements or a switch statement.
+        * Create a Calculator similar to the first exercise!
+        * However, this time use at least two custom methods (one for evaluating the operation and one for continuing)!
         *
-        * Please note that when reading in s String , you want to use scanner.next()
-        * And When comparing strings you wanna use;
-        * s.equals("string");
-        *
-        * afther the result has been output, ask the user if they want to continue, if not  end the program!
-        * Estimated Time: 30 - 45 minutes
+        * Additionally, make sure if a Dividing by 0 would happen, you catch that and just return a 0 instead!
         *
         * */
 
